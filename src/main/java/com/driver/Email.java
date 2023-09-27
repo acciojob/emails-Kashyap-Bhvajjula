@@ -30,20 +30,43 @@ public class Email {
         // 3. It contains at least one lowercase letter
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
-        if (oldPassword.equals(password) && isValidPassword(newPassword)) {
-            this.password = newPassword;
-            System.out.println("Password changed successfully.");
-        } else {
-            System.out.println("Password change failed.");
+        if(newPassword.length()>=8){
+            int upperCaseCount=0;
+            for(int i=0;i<newPassword.length();i++){
+                if(newPassword.charAt(i)>='A' && newPassword.charAt(i)<='Z'){
+                    upperCaseCount++;
+                }
+            }
+            if(upperCaseCount>=1){
+                int lowerCaseCount=0;
+                for(int i=0;i<newPassword.length();i++){
+                    if(newPassword.charAt(i)>='a' && newPassword.charAt(i)<='z'){
+                        lowerCaseCount++;
+                    }
+                }
+                if(lowerCaseCount>=1){
+                    int digitCount=0;
+                    for(int i=0;i<newPassword.length();i++){
+                        if(newPassword.charAt(i)>='0' && newPassword.charAt(i)<='9'){
+                            digitCount++;
+                        }
+                    }
+                    if(digitCount>=1){
+                        int specialCharacter=0;
+                        for(int i=0;i<newPassword.length();i++){
+                            if(!(newPassword.charAt(i)>='0' && newPassword.charAt(i)<='9') &&!(newPassword.charAt(i)>='a' && newPassword.charAt(i)<='z') && !(newPassword.charAt(i)>='A' && newPassword.charAt(i)<='Z')){
+                                specialCharacter++;
+                            }
+                        }
+                        if(specialCharacter>=1){
+                            if(oldPassword.equals(password)){
+                                password=newPassword;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-    private boolean isValidPassword(String password){
-        return password.length() >= 8 &&
-                password.chars().anyMatch(Character::isUpperCase) &&
-                password.chars().anyMatch(Character::isLowerCase) &&
-                password.chars().anyMatch(Character::isDigit) &&
-                password.chars().anyMatch(ch -> !Character.isLetterOrDigit(ch));
-    }
 }
-
 
